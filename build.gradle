@@ -15,10 +15,20 @@ buildscript {
     }
 }
 
+ext {
+    support_lib_version = '26.1.0'
+    dagger_version = '2.5'
+    retrofitVersion = '2.1.0'
+    compileSdkVersion = 26
+    minSdkVersion = 15
+    targetSdkVersion = 25
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 }
 
