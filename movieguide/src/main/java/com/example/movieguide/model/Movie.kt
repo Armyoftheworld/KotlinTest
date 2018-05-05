@@ -43,4 +43,9 @@ class Movie(@SerializedName("poster_path") val posterPath: String,
             override fun newArray(size: Int): Array<Movie?> = arrayOfNulls(size)
         }
     }
+
+    fun getPosterUrl(): String
+    {
+        return "http://image.tmdb.org/t/p/w342$posterPath"
+    }
 }

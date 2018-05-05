@@ -15,6 +15,7 @@ import rx.schedulers.Schedulers
 class ListingPresenterImpl(val interceptor: ListingInterceptor, private var listingView: ListingView?) : ListingPresenter {
     override fun setView(listingView: ListingView) {
         this.listingView = listingView
+        getMovieLists()
 
     }
 
