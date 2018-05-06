@@ -1,7 +1,10 @@
 package com.example.movieguide.api
 
 import com.example.movieguide.model.MovieResponse
+import com.example.movieguide.model.ReviewResponse
+import com.example.movieguide.model.VideoResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.QueryMap
 import rx.Observable
 
@@ -15,4 +18,10 @@ interface TMDBApi {
 
     @GET("/3/discover/movie")
     fun getVenues(@QueryMap map: Map<String, String>): Observable<MovieResponse>
+
+    @GET("3/movie/{movieId}/videos")
+    fun trailers(@Path("movieId") movieId: String): Observable<VideoResponse>
+
+    @GET("3/movie/{movieId}/reviews")
+    fun reviews(@Path("movieId") movieId: String): Observable<ReviewResponse>
 }

@@ -1,12 +1,22 @@
 package com.example.movieguide.ui.adapter
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.support.v7.graphics.Palette
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.animation.GlideAnimation
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.example.movieguide.Constact
 import com.example.movieguide.R
 import com.example.movieguide.model.Movie
+import com.example.movieguide.ui.activity.MovieDetailActivity
 import kotlinx.android.synthetic.main.recycler_listing_item.view.*
 
 /**
@@ -40,8 +50,30 @@ class ListingAdapter : RecyclerView.Adapter<ListingAdapter.ListHolder>() {
 
     inner class ListHolder(root: View) : RecyclerView.ViewHolder(root) {
         fun bind(movie: Movie) = with(itemView) {
+            setOnClickListener {
+                val intent = Intent(context, MovieDetailActivity::class.java)
+                intent.putExtra(Constact.EXTRA_MOVIE, movie)
+                context.startActivity(intent)
+            }
+
             title.text = movie.title
-            Glide.with(context).load(movie.getPosterUrl()).into(poster)
+
+            Glide.with(context)
+                    .load(movie.getPosterUrl())
+                    .asBitmap()
+                    .priority(Priority.HIGH)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(object : BitmapImageViewTarget(poster) {
+                        override fun onResourceReady(resource: Bitmap?, glideAnimation: GlideAnimation<in Bitmap>?) {
+                            super.onResourceReady(resource, glideAnimation)
+                            Palette.from(resource).generate { palette ->
+                                title_background.setBackgroundColor(
+                                        palette.getVibrantColor(Color.parseColor("#99000000")))
+                            }
+
+                        }
+                    })
         }
     }
 }

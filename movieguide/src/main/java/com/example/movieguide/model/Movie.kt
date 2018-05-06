@@ -11,12 +11,18 @@ import com.google.gson.annotations.SerializedName
  * @description
  */
 class Movie(@SerializedName("poster_path") val posterPath: String,
+            @SerializedName("release_date") val releaseDate: String,
             val id: String,
             val overview: String,
-            val backdropPath: String,
+            @SerializedName("backdrop_path") val backdropPath: String,
             val title: String,
-            val voteAverage: Double) : Parcelable {
+            @SerializedName("vote_average") val voteAverage: Double) : Parcelable {
+    fun getPosterUrl(): String = "http://image.tmdb.org/t/p/w342$posterPath"
+
+    fun getBackDropPath(): String = "http://image.tmdb.org/t/p/w780$backdropPath"
+
     constructor(source: Parcel) : this(
+            source.readString(),
             source.readString(),
             source.readString(),
             source.readString(),
@@ -29,6 +35,7 @@ class Movie(@SerializedName("poster_path") val posterPath: String,
 
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeString(posterPath)
+        writeString(releaseDate)
         writeString(id)
         writeString(overview)
         writeString(backdropPath)
@@ -42,10 +49,5 @@ class Movie(@SerializedName("poster_path") val posterPath: String,
             override fun createFromParcel(source: Parcel): Movie = Movie(source)
             override fun newArray(size: Int): Array<Movie?> = arrayOfNulls(size)
         }
-    }
-
-    fun getPosterUrl(): String
-    {
-        return "http://image.tmdb.org/t/p/w342$posterPath"
     }
 }

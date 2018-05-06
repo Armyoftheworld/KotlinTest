@@ -1,9 +1,6 @@
 package com.example.movieguide.di.component
 
-import com.example.movieguide.di.module.ApiModule
-import com.example.movieguide.di.module.AppModule
-import com.example.movieguide.di.module.ListingModule
-import com.example.movieguide.di.module.NetworkModule
+import com.example.movieguide.di.module.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,4 +14,5 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(AppModule::class, ApiModule::class, NetworkModule::class))
 interface AppComponent {
     fun plus(listingModule: ListingModule): ListingComponent
+    fun plus(movieDetailModule: MovieDetailModule): MovieDetailComponent
 }
