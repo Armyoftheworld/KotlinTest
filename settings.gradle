@@ -1,1 +1,1 @@
-include ':app', ':movieguide'
+include ':app', ':movieguide', ':qksms_domain'
